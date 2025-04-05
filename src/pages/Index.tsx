@@ -1,12 +1,361 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React, { useEffect } from 'react';
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import CourseCard from "@/components/CourseCard";
+import ImageSlider from "@/components/ImageSlider";
+import ContactForm from "@/components/ContactForm";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { 
+  Book, Microscope, Calculator, Globe, Music, 
+  Users, Award, BookOpen, GraduationCap, Building 
+} from 'lucide-react';
 
 const Index = () => {
+  // Implement intersection observer for scroll animations
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+    
+    // Get all elements with the animate-on-scroll class
+    const animatedElements = document.querySelectorAll('.animate-on-scroll');
+    
+    // Create an intersection observer for each element
+    animatedElements.forEach(element => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('animate-fade-in');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      
+      observer.observe(element);
+      observers.push(observer);
+    });
+    
+    // Cleanup function
+    return () => {
+      observers.forEach(observer => observer.disconnect());
+    };
+  }, []);
+
+  // Sample campus images (replace with actual images in a real project)
+  const campusImages = [
+    { src: "https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80", alt: "College Building" },
+    { src: "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80", alt: "Campus Library" },
+    { src: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80", alt: "Sports Facilities" },
+  ];
+
+  // Course data
+  const courses = [
+    {
+      title: "Science",
+      description: "Physics, Chemistry, Mathematics, Biology for future engineers, doctors and researchers.",
+      icon: <Microscope size={24} />,
+      students: 450,
+      duration: "2 Years",
+      color: "border-college-blue"
+    },
+    {
+      title: "Commerce",
+      description: "Accountancy, Business Studies, Economics for aspiring business professionals.",
+      icon: <Calculator size={24} />,
+      students: 380,
+      duration: "2 Years",
+      color: "border-college-teal"
+    },
+    {
+      title: "Humanities",
+      description: "History, Geography, Political Science, Sociology for future social scientists.",
+      icon: <Globe size={24} />,
+      students: 320,
+      duration: "2 Years",
+      color: "border-college-orange"
+    },
+    {
+      title: "Fine Arts",
+      description: "Music, Dance, Visual Arts for students with creative pursuits and passion.",
+      icon: <Music size={24} />,
+      students: 150,
+      duration: "2 Years",
+      color: "border-purple-500"
+    }
+  ];
+
+  // Statistics data
+  const stats = [
+    { value: "95%", label: "Placement Rate", icon: <Award size={28} /> },
+    { value: "50+", label: "Experienced Faculty", icon: <GraduationCap size={28} /> },
+    { value: "25,000+", label: "Alumni Network", icon: <Users size={28} /> },
+    { value: "35+", label: "Years of Excellence", icon: <Building size={28} /> }
+  ];
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      
+      {/* Hero Section */}
+      <section id="home" className="relative min-h-screen flex items-center pt-16 bg-gradient-to-r from-blue-50 to-indigo-50">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')] bg-cover bg-center opacity-10"></div>
+        </div>
+        <div className="container mx-auto px-4 z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight animate-on-scroll">
+                Shaping Future Leaders at <span className="text-college-blue">SRE PU College</span>
+              </h1>
+              <p className="text-lg text-gray-700 animate-on-scroll">
+                Unlock your potential with our cutting-edge curriculum, experienced faculty, and world-class facilities. We prepare students for success in academics and life.
+              </p>
+              <div className="flex flex-wrap gap-4 animate-on-scroll">
+                <Button size="lg" className="bg-college-blue hover:bg-college-blue/90">
+                  Explore Programs
+                </Button>
+                <Button size="lg" variant="outline">
+                  Campus Tour
+                </Button>
+              </div>
+              
+              <div className="pt-6 flex items-center space-x-4 animate-on-scroll">
+                <div className="flex -space-x-2">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className={`w-10 h-10 rounded-full border-2 border-white bg-gray-${i * 100} flex items-center justify-center text-xs font-medium text-white`}>
+                      {i}
+                    </div>
+                  ))}
+                </div>
+                <p className="text-sm text-gray-600">
+                  Join <span className="font-semibold">5,000+</span> students who trust our education
+                </p>
+              </div>
+            </div>
+            
+            <div className="animate-on-scroll">
+              <div className="relative">
+                <div className="absolute -right-4 -bottom-4 w-full h-full border-4 border-college-blue rounded-lg"></div>
+                <img 
+                  src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80" 
+                  alt="Students at SRE PU College" 
+                  className="w-full h-auto rounded-lg object-cover shadow-lg animate-float max-h-[500px]"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* About Section */}
+      <section id="about" className="py-24 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h6 className="text-college-blue font-medium mb-2 animate-on-scroll">ABOUT US</h6>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 animate-on-scroll">
+              Excellence in Education Since 1985
+            </h2>
+            <div className="w-24 h-1 bg-college-blue mx-auto mb-6 animate-on-scroll"></div>
+            <p className="max-w-3xl mx-auto text-gray-600 animate-on-scroll">
+              SRE PU College has been a pioneer in pre-university education, providing a foundation for students to excel in their academic and professional pursuits.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <Card className="animate-on-scroll">
+              <CardContent className="pt-6">
+                <div className="text-college-blue mb-4">
+                  <BookOpen size={36} />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">Academic Excellence</h3>
+                <p className="text-gray-600">
+                  Our curriculum is designed to challenge and inspire students, with a focus on conceptual understanding and practical applications.
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card className="animate-on-scroll animate-delay-200">
+              <CardContent className="pt-6">
+                <div className="text-college-teal mb-4">
+                  <Users size={36} />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">Expert Faculty</h3>
+                <p className="text-gray-600">
+                  Learn from experienced educators who are passionate about teaching and committed to student success.
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card className="animate-on-scroll animate-delay-300">
+              <CardContent className="pt-6">
+                <div className="text-college-orange mb-4">
+                  <Award size={36} />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">Modern Facilities</h3>
+                <p className="text-gray-600">
+                  Our campus features state-of-the-art laboratories, libraries, sports facilities, and smart classrooms.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+          
+          {/* Statistics */}
+          <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6">
+            {stats.map((stat, index) => (
+              <div key={index} className={`text-center animate-on-scroll animate-delay-${index * 100}`}>
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 text-college-blue mb-4">
+                  {stat.icon}
+                </div>
+                <h3 className="text-3xl font-bold">{stat.value}</h3>
+                <p className="text-gray-600">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* Courses Section */}
+      <section id="courses" className="py-24 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h6 className="text-college-blue font-medium mb-2 animate-on-scroll">OUR PROGRAMS</h6>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 animate-on-scroll">
+              Academic Programs We Offer
+            </h2>
+            <div className="w-24 h-1 bg-college-blue mx-auto mb-6 animate-on-scroll"></div>
+            <p className="max-w-3xl mx-auto text-gray-600 animate-on-scroll">
+              Choose from our diverse range of pre-university programs designed to prepare you for higher education and future careers.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {courses.map((course, index) => (
+              <div key={index} className={`animate-on-scroll animate-delay-${index * 100}`}>
+                <CourseCard {...course} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* Campus Section */}
+      <section id="campus" className="py-24 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h6 className="text-college-blue font-medium mb-2 animate-on-scroll">OUR CAMPUS</h6>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 animate-on-scroll">
+              Explore Our Beautiful Campus
+            </h2>
+            <div className="w-24 h-1 bg-college-blue mx-auto mb-6 animate-on-scroll"></div>
+            <p className="max-w-3xl mx-auto text-gray-600 animate-on-scroll">
+              Take a virtual tour of our world-class facilities designed to provide the best learning environment for our students.
+            </p>
+          </div>
+          
+          <div className="animate-on-scroll">
+            <ImageSlider images={campusImages} />
+          </div>
+          
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="animate-on-scroll">
+              <h3 className="text-xl font-bold mb-2">Modern Infrastructure</h3>
+              <p className="text-gray-600">
+                State-of-the-art classrooms, laboratories, and study spaces designed to enhance the learning experience.
+              </p>
+            </div>
+            
+            <div className="animate-on-scroll animate-delay-100">
+              <h3 className="text-xl font-bold mb-2">Sports Facilities</h3>
+              <p className="text-gray-600">
+                Comprehensive sports facilities including indoor and outdoor courts, fields, and fitness center.
+              </p>
+            </div>
+            
+            <div className="animate-on-scroll animate-delay-200">
+              <h3 className="text-xl font-bold mb-2">Library & Resources</h3>
+              <p className="text-gray-600">
+                Well-stocked library with physical and digital resources to support academic research and learning.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Call to Action */}
+      <section className="py-16 bg-college-blue text-white parallax" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1500&q=80)'}}>
+        <div className="absolute inset-0 bg-college-blue/90"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 animate-on-scroll">
+              Ready to Begin Your Academic Journey?
+            </h2>
+            <p className="text-lg mb-8 animate-on-scroll">
+              Join SRE PU College and take the first step towards a successful future. Applications for the upcoming academic year are now open.
+            </p>
+            <Button size="lg" variant="secondary" className="animate-on-scroll">
+              Apply Now
+            </Button>
+          </div>
+        </div>
+      </section>
+      
+      {/* Contact Section */}
+      <section id="contact" className="py-24 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h6 className="text-college-blue font-medium mb-2 animate-on-scroll">GET IN TOUCH</h6>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 animate-on-scroll">
+              Contact Us
+            </h2>
+            <div className="w-24 h-1 bg-college-blue mx-auto mb-6 animate-on-scroll"></div>
+            <p className="max-w-3xl mx-auto text-gray-600 animate-on-scroll">
+              Have questions about our programs or admission process? Reach out to us and our team will be happy to assist you.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div className="animate-on-scroll">
+              <div className="bg-white p-6 rounded-lg shadow-lg h-full">
+                <ContactForm />
+              </div>
+            </div>
+            
+            <div className="space-y-8 animate-on-scroll">
+              <div>
+                <h3 className="text-xl font-bold mb-4">Visit Our Campus</h3>
+                <p className="text-gray-600 mb-4">
+                  We welcome prospective students and their families to visit our campus and experience the SRE PU College environment firsthand.
+                </p>
+                <div className="aspect-w-16 aspect-h-9">
+                  <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d497699.9974179213!2d77.30125332343836!3d12.95384772557775!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfc3e8517e4fe0!2sBengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1651231233452!5m2!1sen!2sin" 
+                    width="100%" 
+                    height="300" 
+                    style={{border:0}} 
+                    allowFullScreen={true} 
+                    loading="lazy" 
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="SRE PU College Location"
+                    className="rounded-lg"
+                  />
+                </div>
+              </div>
+              
+              <div>
+                <h3 className="text-xl font-bold mb-4">Admission Office</h3>
+                <p className="text-gray-600">
+                  Our admission office is open Monday through Friday, 9:00 AM to 5:00 PM. Schedule a visit or call us for more information about our programs and application process.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <Footer />
     </div>
   );
 };
