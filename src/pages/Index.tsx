@@ -1,10 +1,10 @@
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CourseCard from "@/components/CourseCard";
 import ImageSlider from "@/components/ImageSlider";
 import ContactForm from "@/components/ContactForm";
+import ActionModal from "@/components/ActionModal";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { 
@@ -13,6 +13,27 @@ import {
 } from 'lucide-react';
 
 const Index = () => {
+  // Background images for hero section
+  const backgroundImages = [
+    "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80",
+    "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80",
+    "https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80"
+  ];
+  
+  const [currentBgIndex, setCurrentBgIndex] = useState(0);
+  const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
+  const [isExploreModalOpen, setIsExploreModalOpen] = useState(false);
+  const [isCampusModalOpen, setIsCampusModalOpen] = useState(false);
+
+  // Background image transition effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentBgIndex((prevIndex) => (prevIndex + 1) % backgroundImages.length);
+    }, 8000); // Change background every 8 seconds
+    
+    return () => clearInterval(interval);
+  }, [backgroundImages.length]);
+  
   // Sample campus images
   const campusImages = [
     { src: "https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80", alt: "College Building" },
@@ -68,8 +89,18 @@ const Index = () => {
     <div className="flex flex-col min-h-screen">
       <Navbar />
       
-      {/* Hero Section - Simplified */}
-      <section id="home" className="relative min-h-[85vh] flex items-center pt-16 bg-gradient-to-r from-gray-50 to-blue-50">
+      {/* Hero Section with Background Image Transition */}
+      <section id="home" className="relative min-h-[85vh] flex items-center pt-16">
+        {backgroundImages.map((image, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ${
+              index === currentBgIndex ? 'opacity-100' : 'opacity-0'
+            }`}
+            style={{ backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url(${image})` }}
+          />
+        ))}
+        
         <div className="container mx-auto px-4 z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
@@ -80,10 +111,18 @@ const Index = () => {
                 Unlock your potential with our cutting-edge curriculum, experienced faculty, and world-class facilities. We prepare students for success in academics and life.
               </p>
               <div className="flex flex-wrap gap-4">
-                <Button size="lg" className="bg-college-blue hover:bg-college-blue/90">
+                <Button 
+                  size="lg" 
+                  className="bg-college-blue hover:bg-college-blue/90"
+                  onClick={() => setIsExploreModalOpen(true)}
+                >
                   Explore Programs
                 </Button>
-                <Button size="lg" variant="outline">
+                <Button 
+                  size="lg" 
+                  variant="outline"
+                  onClick={() => setIsCampusModalOpen(true)}
+                >
                   Campus Tour
                 </Button>
               </div>
@@ -116,7 +155,7 @@ const Index = () => {
         </div>
       </section>
       
-      {/* About Section - Minimized */}
+      {/* About Section */}
       <section id="about" className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-10">
@@ -183,7 +222,7 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Courses Section - Minimized */}
+      {/* Courses Section */}
       <section id="courses" className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-10">
@@ -207,7 +246,7 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Campus Section - Minimized */}
+      {/* Campus Section */}
       <section id="campus" className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-10">
@@ -250,7 +289,7 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Call to Action - Simplified */}
+      {/* Call to Action */}
       <section className="py-14 bg-college-blue text-white" style={{background: 'linear-gradient(rgba(30, 64, 175, 0.9), rgba(30, 64, 175, 0.9)), url(https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1500&q=80) center/cover'}}>
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
@@ -260,14 +299,18 @@ const Index = () => {
             <p className="text-lg mb-6">
               Join SRE PU College and take the first step towards a successful future. Applications for the upcoming academic year are now open.
             </p>
-            <Button size="lg" variant="secondary">
+            <Button 
+              size="lg" 
+              variant="secondary"
+              onClick={() => setIsApplyModalOpen(true)}
+            >
               Apply Now
             </Button>
           </div>
         </div>
       </section>
       
-      {/* Contact Section - Simplified */}
+      {/* Contact Section */}
       <section id="contact" className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-10">
@@ -319,6 +362,28 @@ const Index = () => {
           </div>
         </div>
       </section>
+      
+      {/* Modals */}
+      <ActionModal 
+        isOpen={isApplyModalOpen}
+        onClose={() => setIsApplyModalOpen(false)}
+        title="Apply for Admission"
+        type="apply"
+      />
+      
+      <ActionModal 
+        isOpen={isExploreModalOpen}
+        onClose={() => setIsExploreModalOpen(false)}
+        title="Our Programs"
+        type="explore"
+      />
+      
+      <ActionModal 
+        isOpen={isCampusModalOpen}
+        onClose={() => setIsCampusModalOpen(false)}
+        title="Campus Tour"
+        type="campus"
+      />
       
       <Footer />
     </div>
