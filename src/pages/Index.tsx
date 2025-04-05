@@ -13,11 +13,11 @@ import {
 } from 'lucide-react';
 
 const Index = () => {
-  // Background images for hero section
+  // High-quality background images for hero section
   const backgroundImages = [
-    "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80",
-    "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80",
-    "https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80"
+    "https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1664&q=80",
+    "https://images.unsplash.com/photo-1562774053-a3d1e69fe344?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1664&q=80",
+    "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1500&q=80"
   ];
   
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
@@ -25,11 +25,11 @@ const Index = () => {
   const [isExploreModalOpen, setIsExploreModalOpen] = useState(false);
   const [isCampusModalOpen, setIsCampusModalOpen] = useState(false);
 
-  // Background image transition effect
+  // Background image transition effect with smoother fade
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentBgIndex((prevIndex) => (prevIndex + 1) % backgroundImages.length);
-    }, 8000); // Change background every 8 seconds
+    }, 6000); // Change background every 6 seconds for better visibility
     
     return () => clearInterval(interval);
   }, [backgroundImages.length]);
@@ -89,23 +89,23 @@ const Index = () => {
     <div className="flex flex-col min-h-screen">
       <Navbar />
       
-      {/* Hero Section with Background Image Transition */}
+      {/* Hero Section with Enhanced Background Image Transition */}
       <section id="home" className="relative min-h-[85vh] flex items-center pt-16">
         {backgroundImages.map((image, index) => (
           <div
             key={index}
-            className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ${
+            className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-2000 ${
               index === currentBgIndex ? 'opacity-100' : 'opacity-0'
             }`}
-            style={{ backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url(${image})` }}
+            style={{ backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(${image})` }}
           />
         ))}
         
         <div className="container mx-auto px-4 z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
-              <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-                Shaping Future Leaders at <span className="text-college-blue">SRE PU College</span>
+              <h1 className="text-4xl md:text-5xl font-bold leading-tight bg-clip-text text-transparent bg-gradient-to-r from-college-blue to-college-teal animate-pulse">
+                Shaping Future Leaders at <span className="font-extrabold text-college-blue drop-shadow-md">SRE PU College</span>
               </h1>
               <p className="text-lg text-gray-700">
                 Unlock your potential with our cutting-edge curriculum, experienced faculty, and world-class facilities. We prepare students for success in academics and life.
@@ -113,7 +113,7 @@ const Index = () => {
               <div className="flex flex-wrap gap-4">
                 <Button 
                   size="lg" 
-                  className="bg-college-blue hover:bg-college-blue/90"
+                  className="bg-college-blue hover:bg-college-blue/90 shadow-lg"
                   onClick={() => setIsExploreModalOpen(true)}
                 >
                   Explore Programs
@@ -121,6 +121,7 @@ const Index = () => {
                 <Button 
                   size="lg" 
                   variant="outline"
+                  className="border-2 hover:shadow-md transition-all"
                   onClick={() => setIsCampusModalOpen(true)}
                 >
                   Campus Tour
