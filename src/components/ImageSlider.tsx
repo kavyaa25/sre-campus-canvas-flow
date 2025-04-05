@@ -8,31 +8,22 @@ interface ImageSliderProps {
 
 const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
 
-  // Auto-slide functionality
+  // Simple auto-slide with reduced frequency
   useEffect(() => {
     const interval = setInterval(() => {
-      nextSlide();
-    }, 5000);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 7000); // Slower transition time
     
     return () => clearInterval(interval);
-  }, [currentIndex]);
+  }, [currentIndex, images.length]);
 
   const nextSlide = () => {
-    if (!isAnimating) {
-      setIsAnimating(true);
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-      setTimeout(() => setIsAnimating(false), 500); // Match transition duration
-    }
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
   };
 
   const prevSlide = () => {
-    if (!isAnimating) {
-      setIsAnimating(true);
-      setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
-      setTimeout(() => setIsAnimating(false), 500); // Match transition duration
-    }
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
   };
 
   return (
@@ -42,7 +33,7 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
         {images.map((image, index) => (
           <div
             key={index}
-            className={`absolute top-0 left-0 w-full h-full transition-opacity duration-500 ease-in-out ${
+            className={`absolute top-0 left-0 w-full h-full transition-opacity duration-700 ${
               index === currentIndex ? 'opacity-100' : 'opacity-0'
             }`}
           >
@@ -58,28 +49,28 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
       {/* Navigation arrows */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full transition-colors"
+        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white/90 text-gray-800 p-2 rounded-full transition-colors"
         aria-label="Previous slide"
       >
-        <ChevronLeft size={24} />
+        <ChevronLeft size={20} />
       </button>
       
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full transition-colors"
+        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white/90 text-gray-800 p-2 rounded-full transition-colors"
         aria-label="Next slide"
       >
-        <ChevronRight size={24} />
+        <ChevronRight size={20} />
       </button>
 
-      {/* Dots indicator */}
+      {/* Simplified dots indicator */}
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
         {images.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}
-            className={`w-3 h-3 rounded-full transition-colors ${
-              index === currentIndex ? 'bg-white' : 'bg-white/50'
+            className={`w-2 h-2 rounded-full transition-colors ${
+              index === currentIndex ? 'bg-white' : 'bg-white/40'
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />

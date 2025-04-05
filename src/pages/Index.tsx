@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CourseCard from "@/components/CourseCard";
@@ -13,38 +13,7 @@ import {
 } from 'lucide-react';
 
 const Index = () => {
-  // Implement intersection observer for scroll animations
-  useEffect(() => {
-    const observers: IntersectionObserver[] = [];
-    
-    // Get all elements with the animate-on-scroll class
-    const animatedElements = document.querySelectorAll('.animate-on-scroll');
-    
-    // Create an intersection observer for each element
-    animatedElements.forEach(element => {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('animate-fade-in');
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.1 }
-      );
-      
-      observer.observe(element);
-      observers.push(observer);
-    });
-    
-    // Cleanup function
-    return () => {
-      observers.forEach(observer => observer.disconnect());
-    };
-  }, []);
-
-  // Sample campus images (replace with actual images in a real project)
+  // Sample campus images
   const campusImages = [
     { src: "https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80", alt: "College Building" },
     { src: "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80", alt: "Campus Library" },
@@ -89,31 +58,28 @@ const Index = () => {
 
   // Statistics data
   const stats = [
-    { value: "95%", label: "Placement Rate", icon: <Award size={28} /> },
-    { value: "50+", label: "Experienced Faculty", icon: <GraduationCap size={28} /> },
-    { value: "25,000+", label: "Alumni Network", icon: <Users size={28} /> },
-    { value: "35+", label: "Years of Excellence", icon: <Building size={28} /> }
+    { value: "95%", label: "Placement Rate", icon: <Award size={24} /> },
+    { value: "50+", label: "Experienced Faculty", icon: <GraduationCap size={24} /> },
+    { value: "25,000+", label: "Alumni Network", icon: <Users size={24} /> },
+    { value: "35+", label: "Years of Excellence", icon: <Building size={24} /> }
   ];
 
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
       
-      {/* Hero Section */}
-      <section id="home" className="relative min-h-screen flex items-center pt-16 bg-gradient-to-r from-blue-50 to-indigo-50">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')] bg-cover bg-center opacity-10"></div>
-        </div>
+      {/* Hero Section - Simplified */}
+      <section id="home" className="relative min-h-[85vh] flex items-center pt-16 bg-gradient-to-r from-gray-50 to-blue-50">
         <div className="container mx-auto px-4 z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight animate-on-scroll">
+              <h1 className="text-4xl md:text-5xl font-bold leading-tight">
                 Shaping Future Leaders at <span className="text-college-blue">SRE PU College</span>
               </h1>
-              <p className="text-lg text-gray-700 animate-on-scroll">
+              <p className="text-lg text-gray-700">
                 Unlock your potential with our cutting-edge curriculum, experienced faculty, and world-class facilities. We prepare students for success in academics and life.
               </p>
-              <div className="flex flex-wrap gap-4 animate-on-scroll">
+              <div className="flex flex-wrap gap-4">
                 <Button size="lg" className="bg-college-blue hover:bg-college-blue/90">
                   Explore Programs
                 </Button>
@@ -122,7 +88,7 @@ const Index = () => {
                 </Button>
               </div>
               
-              <div className="pt-6 flex items-center space-x-4 animate-on-scroll">
+              <div className="pt-6 flex items-center space-x-4">
                 <div className="flex -space-x-2">
                   {[1, 2, 3, 4].map((i) => (
                     <div key={i} className={`w-10 h-10 rounded-full border-2 border-white bg-gray-${i * 100} flex items-center justify-center text-xs font-medium text-white`}>
@@ -136,13 +102,13 @@ const Index = () => {
               </div>
             </div>
             
-            <div className="animate-on-scroll">
+            <div>
               <div className="relative">
-                <div className="absolute -right-4 -bottom-4 w-full h-full border-4 border-college-blue rounded-lg"></div>
+                <div className="absolute -right-2 -bottom-2 w-full h-full border-2 border-college-blue rounded-lg"></div>
                 <img 
                   src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80" 
                   alt="Students at SRE PU College" 
-                  className="w-full h-auto rounded-lg object-cover shadow-lg animate-float max-h-[500px]"
+                  className="w-full h-auto rounded-lg object-cover shadow-md max-h-[500px]"
                 />
               </div>
             </div>
@@ -150,51 +116,51 @@ const Index = () => {
         </div>
       </section>
       
-      {/* About Section */}
-      <section id="about" className="py-24 bg-white">
+      {/* About Section - Minimized */}
+      <section id="about" className="py-20 bg-white">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h6 className="text-college-blue font-medium mb-2 animate-on-scroll">ABOUT US</h6>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 animate-on-scroll">
+          <div className="text-center mb-10">
+            <h6 className="text-college-blue font-medium mb-2">ABOUT US</h6>
+            <h2 className="text-3xl font-bold mb-3">
               Excellence in Education Since 1985
             </h2>
-            <div className="w-24 h-1 bg-college-blue mx-auto mb-6 animate-on-scroll"></div>
-            <p className="max-w-3xl mx-auto text-gray-600 animate-on-scroll">
+            <div className="w-20 h-1 bg-college-blue mx-auto mb-6"></div>
+            <p className="max-w-3xl mx-auto text-gray-600">
               SRE PU College has been a pioneer in pre-university education, providing a foundation for students to excel in their academic and professional pursuits.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="animate-on-scroll">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card>
               <CardContent className="pt-6">
                 <div className="text-college-blue mb-4">
-                  <BookOpen size={36} />
+                  <BookOpen size={30} />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Academic Excellence</h3>
+                <h3 className="text-lg font-semibold mb-2">Academic Excellence</h3>
                 <p className="text-gray-600">
-                  Our curriculum is designed to challenge and inspire students, with a focus on conceptual understanding and practical applications.
+                  Our curriculum is designed to challenge and inspire students, with a focus on conceptual understanding.
                 </p>
               </CardContent>
             </Card>
             
-            <Card className="animate-on-scroll animate-delay-200">
+            <Card>
               <CardContent className="pt-6">
                 <div className="text-college-teal mb-4">
-                  <Users size={36} />
+                  <Users size={30} />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Expert Faculty</h3>
+                <h3 className="text-lg font-semibold mb-2">Expert Faculty</h3>
                 <p className="text-gray-600">
                   Learn from experienced educators who are passionate about teaching and committed to student success.
                 </p>
               </CardContent>
             </Card>
             
-            <Card className="animate-on-scroll animate-delay-300">
+            <Card>
               <CardContent className="pt-6">
                 <div className="text-college-orange mb-4">
-                  <Award size={36} />
+                  <Award size={30} />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Modern Facilities</h3>
+                <h3 className="text-lg font-semibold mb-2">Modern Facilities</h3>
                 <p className="text-gray-600">
                   Our campus features state-of-the-art laboratories, libraries, sports facilities, and smart classrooms.
                 </p>
@@ -202,14 +168,14 @@ const Index = () => {
             </Card>
           </div>
           
-          {/* Statistics */}
-          <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6">
+          {/* Statistics - Simplified */}
+          <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
             {stats.map((stat, index) => (
-              <div key={index} className={`text-center animate-on-scroll animate-delay-${index * 100}`}>
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 text-college-blue mb-4">
+              <div key={index} className="text-center">
+                <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-blue-50 text-college-blue mb-4">
                   {stat.icon}
                 </div>
-                <h3 className="text-3xl font-bold">{stat.value}</h3>
+                <h3 className="text-2xl font-bold">{stat.value}</h3>
                 <p className="text-gray-600">{stat.label}</p>
               </div>
             ))}
@@ -217,23 +183,23 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Courses Section */}
-      <section id="courses" className="py-24 bg-gray-50">
+      {/* Courses Section - Minimized */}
+      <section id="courses" className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h6 className="text-college-blue font-medium mb-2 animate-on-scroll">OUR PROGRAMS</h6>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 animate-on-scroll">
+          <div className="text-center mb-10">
+            <h6 className="text-college-blue font-medium mb-2">OUR PROGRAMS</h6>
+            <h2 className="text-3xl font-bold mb-3">
               Academic Programs We Offer
             </h2>
-            <div className="w-24 h-1 bg-college-blue mx-auto mb-6 animate-on-scroll"></div>
-            <p className="max-w-3xl mx-auto text-gray-600 animate-on-scroll">
+            <div className="w-20 h-1 bg-college-blue mx-auto mb-6"></div>
+            <p className="max-w-3xl mx-auto text-gray-600">
               Choose from our diverse range of pre-university programs designed to prepare you for higher education and future careers.
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {courses.map((course, index) => (
-              <div key={index} className={`animate-on-scroll animate-delay-${index * 100}`}>
+              <div key={index}>
                 <CourseCard {...course} />
               </div>
             ))}
@@ -241,41 +207,41 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Campus Section */}
-      <section id="campus" className="py-24 bg-white">
+      {/* Campus Section - Minimized */}
+      <section id="campus" className="py-20 bg-white">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h6 className="text-college-blue font-medium mb-2 animate-on-scroll">OUR CAMPUS</h6>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 animate-on-scroll">
+          <div className="text-center mb-10">
+            <h6 className="text-college-blue font-medium mb-2">OUR CAMPUS</h6>
+            <h2 className="text-3xl font-bold mb-3">
               Explore Our Beautiful Campus
             </h2>
-            <div className="w-24 h-1 bg-college-blue mx-auto mb-6 animate-on-scroll"></div>
-            <p className="max-w-3xl mx-auto text-gray-600 animate-on-scroll">
+            <div className="w-20 h-1 bg-college-blue mx-auto mb-6"></div>
+            <p className="max-w-3xl mx-auto text-gray-600">
               Take a virtual tour of our world-class facilities designed to provide the best learning environment for our students.
             </p>
           </div>
           
-          <div className="animate-on-scroll">
+          <div>
             <ImageSlider images={campusImages} />
           </div>
           
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="animate-on-scroll">
-              <h3 className="text-xl font-bold mb-2">Modern Infrastructure</h3>
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <h3 className="text-lg font-bold mb-2">Modern Infrastructure</h3>
               <p className="text-gray-600">
                 State-of-the-art classrooms, laboratories, and study spaces designed to enhance the learning experience.
               </p>
             </div>
             
-            <div className="animate-on-scroll animate-delay-100">
-              <h3 className="text-xl font-bold mb-2">Sports Facilities</h3>
+            <div>
+              <h3 className="text-lg font-bold mb-2">Sports Facilities</h3>
               <p className="text-gray-600">
                 Comprehensive sports facilities including indoor and outdoor courts, fields, and fitness center.
               </p>
             </div>
             
-            <div className="animate-on-scroll animate-delay-200">
-              <h3 className="text-xl font-bold mb-2">Library & Resources</h3>
+            <div>
+              <h3 className="text-lg font-bold mb-2">Library & Resources</h3>
               <p className="text-gray-600">
                 Well-stocked library with physical and digital resources to support academic research and learning.
               </p>
@@ -284,48 +250,47 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Call to Action */}
-      <section className="py-16 bg-college-blue text-white parallax" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1500&q=80)'}}>
-        <div className="absolute inset-0 bg-college-blue/90"></div>
-        <div className="container mx-auto px-4 relative z-10">
+      {/* Call to Action - Simplified */}
+      <section className="py-14 bg-college-blue text-white" style={{background: 'linear-gradient(rgba(30, 64, 175, 0.9), rgba(30, 64, 175, 0.9)), url(https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1500&q=80) center/cover'}}>
+        <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 animate-on-scroll">
+            <h2 className="text-3xl font-bold mb-4">
               Ready to Begin Your Academic Journey?
             </h2>
-            <p className="text-lg mb-8 animate-on-scroll">
+            <p className="text-lg mb-6">
               Join SRE PU College and take the first step towards a successful future. Applications for the upcoming academic year are now open.
             </p>
-            <Button size="lg" variant="secondary" className="animate-on-scroll">
+            <Button size="lg" variant="secondary">
               Apply Now
             </Button>
           </div>
         </div>
       </section>
       
-      {/* Contact Section */}
-      <section id="contact" className="py-24 bg-gray-50">
+      {/* Contact Section - Simplified */}
+      <section id="contact" className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h6 className="text-college-blue font-medium mb-2 animate-on-scroll">GET IN TOUCH</h6>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 animate-on-scroll">
+          <div className="text-center mb-10">
+            <h6 className="text-college-blue font-medium mb-2">GET IN TOUCH</h6>
+            <h2 className="text-3xl font-bold mb-3">
               Contact Us
             </h2>
-            <div className="w-24 h-1 bg-college-blue mx-auto mb-6 animate-on-scroll"></div>
-            <p className="max-w-3xl mx-auto text-gray-600 animate-on-scroll">
+            <div className="w-20 h-1 bg-college-blue mx-auto mb-6"></div>
+            <p className="max-w-3xl mx-auto text-gray-600">
               Have questions about our programs or admission process? Reach out to us and our team will be happy to assist you.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div className="animate-on-scroll">
-              <div className="bg-white p-6 rounded-lg shadow-lg h-full">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <div>
+              <div className="bg-white p-6 rounded-lg shadow-sm h-full">
                 <ContactForm />
               </div>
             </div>
             
-            <div className="space-y-8 animate-on-scroll">
+            <div className="space-y-8">
               <div>
-                <h3 className="text-xl font-bold mb-4">Visit Our Campus</h3>
+                <h3 className="text-lg font-bold mb-4">Visit Our Campus</h3>
                 <p className="text-gray-600 mb-4">
                   We welcome prospective students and their families to visit our campus and experience the SRE PU College environment firsthand.
                 </p>
@@ -345,7 +310,7 @@ const Index = () => {
               </div>
               
               <div>
-                <h3 className="text-xl font-bold mb-4">Admission Office</h3>
+                <h3 className="text-lg font-bold mb-4">Admission Office</h3>
                 <p className="text-gray-600">
                   Our admission office is open Monday through Friday, 9:00 AM to 5:00 PM. Schedule a visit or call us for more information about our programs and application process.
                 </p>

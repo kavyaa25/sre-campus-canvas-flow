@@ -17,14 +17,10 @@ const Navbar = () => {
     { name: 'Contact', href: '#contact' }
   ];
 
-  // Handle scroll event to change navbar appearance
+  // Handle scroll event to change navbar appearance with simplified transition
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 20);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -36,13 +32,13 @@ const Navbar = () => {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled 
-          ? "bg-white shadow-md py-2"
+          ? "bg-white shadow-sm py-3"
           : "bg-transparent py-4"
       )}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
         <a href="#home" className="flex items-center">
-          <span className="text-2xl font-bold text-college-blue font-poppins">SRE PU College</span>
+          <span className="text-xl font-semibold text-college-blue font-poppins">SRE PU College</span>
         </a>
 
         {/* Desktop Navigation */}
@@ -58,6 +54,7 @@ const Navbar = () => {
           ))}
           <Button 
             variant="default" 
+            size="sm"
             className="bg-college-blue hover:bg-college-blue/90"
           >
             Apply Now
@@ -71,20 +68,20 @@ const Navbar = () => {
             size="icon" 
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </Button>
         </div>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Navigation - simplified animation */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white absolute top-full left-0 right-0 shadow-lg animate-fade-in">
+        <div className="md:hidden bg-white absolute top-full left-0 right-0 shadow-md">
           <div className="container mx-auto px-4 py-4 flex flex-col space-y-3">
             {navItems.map((item) => (
               <a 
                 key={item.name} 
                 href={item.href} 
-                className="py-2 px-4 font-medium text-gray-600 hover:text-college-blue transition-colors"
+                className="py-2 font-medium text-gray-600 hover:text-college-blue transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {item.name}
